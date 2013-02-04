@@ -139,3 +139,30 @@ Model Class should be filled in automatically with 'User'
 click Preview
 click Generate
 
+
+Third commit: f4a03c574799c88062699608b49413ac6c3649f4
+
+
+********* Create a new model for admins
+
+SingleTableInheritanceExample/protected$ vim models/Admin.php
+
+		1 <?php
+		2
+		3 class Admin extends User
+		4 {
+		5 }
+
+
+********* Create a CRUD for admins
+
+	** skip these steps if you still have your web browser open	
+	visit 'http://localhost/SingleTableInheritanceExample/index.php?r=gii/default/login' in the web browser
+	type 'password' and press enter
+click 'Crud Generator' link
+type 'Admin' for Model Class
+Model Controller ID should be filled in automatically with 'admin'
+click Preview
+click Generate
+
+
