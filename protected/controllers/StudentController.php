@@ -92,9 +92,9 @@ class StudentController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Student']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Student'];
+			$model->attributes=$_POST['User'];
 			$model->role = 'student';
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));

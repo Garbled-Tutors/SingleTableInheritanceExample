@@ -92,12 +92,15 @@ class AdminController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Admin']))
+		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['Admin'];
+			$model->attributes=$_POST['User'];
 			$model->role = 'admin';
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+			else
+			{
+			}
 		}
 
 		$this->render('update',array(

@@ -326,3 +326,20 @@ SingleTableInheritanceExample/protected$ vim models/Admin.php models/Student.php
 			8           );
 			9   }
 
+sixth commit: 585b7e828fbeb5954799c22e720dff9f3affd33a
+
+SingleTableInheritanceExample/protected$ vim controllers/*
+
+********* Update Bug fix. Could not modify users.
+
+							change 'Student', 'Admin', and 'Teacher' to 'User' on line 95 and 97 in AdminController, StudentController, and TeacherController
+			88   public function actionUpdate($id)
+			89   {
+			90     $model=$this->loadModel($id);
+			91
+			92     // Uncomment the following line if AJAX validation is needed
+			93     // $this->performAjaxValidation($model);
+			94
+			95     if(isset($_POST['User']))
+			96     {
+			97       $model->attributes=$_POST['User'];
