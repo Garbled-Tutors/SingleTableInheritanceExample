@@ -22,12 +22,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'role'); ?>
-		<?php echo $form->textField($model,'role',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'role'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'password_hash'); ?>
 		<?php echo $form->textField($model,'password_hash',array('size'=>60,'maxlength'=>60)); ?>
 		<?php echo $form->error($model,'password_hash'); ?>

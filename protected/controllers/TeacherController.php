@@ -70,6 +70,7 @@ class TeacherController extends Controller
 		if(isset($_POST['Teacher']))
 		{
 			$model->attributes=$_POST['Teacher'];
+			$model->role = 'teacher';
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -94,6 +95,7 @@ class TeacherController extends Controller
 		if(isset($_POST['Teacher']))
 		{
 			$model->attributes=$_POST['Teacher'];
+			$model->role = 'teacher';
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

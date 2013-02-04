@@ -248,3 +248,81 @@ SingleTableInheritanceExample/protected$ vim views/layouts/main.php
 			39         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			40       ),
 			41     )); ?>
+
+
+********* Set the role for each user type automatically
+
+SingleTableInheritanceExample/protected$ vim controllers/*
+
+							Added lines 73 and 98 to AdminController, TeacherController, and Student Controller
+							set the role to 'admin', 'teacher', and 'student' respectively
+
+			63   public function actionCreate()
+			64   {
+			65     $model=new Admin;
+			66
+			67     // Uncomment the following line if AJAX validation is needed
+			68     // $this->performAjaxValidation($model);
+			69
+			70     if(isset($_POST['Admin']))
+			71     {
+			72       $model->attributes=$_POST['Admin'];
+			73       $model->role = 'admin';
+			74       if($model->save())
+			75         $this->redirect(array('view','id'=>$model->id));
+			76     }
+			77
+			78     $this->render('create',array(
+			79       'model'=>$model,
+			80     ));
+			81   }
+			
+			88   public function actionUpdate($id)
+			89   {
+			90     $model=$this->loadModel($id);
+			91
+			92     // Uncomment the following line if AJAX validation is needed
+			93     // $this->performAjaxValidation($model);
+			94
+			95     if(isset($_POST['Admin']))
+			96     {
+			97       $model->attributes=$_POST['Admin'];
+			98       $model->role = 'admin';
+			99       if($model->save())
+			100         $this->redirect(array('view','id'=>$model->id));
+			101     }
+			102
+			103     $this->render('update',array(
+			104       'model'=>$model,
+			105     ));
+			106   }
+
+SingleTableInheritanceExample/protected$ vim views/admin/_form.php views/student/_form.php views/teacher/_form.php
+
+********* Remove the field that asks for the users role
+
+							Deleted the code between these two sections in each file
+
+			18   <div class="row">
+			19     <?php echo $form->labelEx($model,'username'); ?>
+			20     <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>100)); ?>
+			21     <?php echo $form->error($model,'username'); ?>
+			22   </div>
+			23
+			24   <div class="row">
+			25     <?php echo $form->labelEx($model,'password_hash'); ?>
+			26     <?php echo $form->textField($model,'password_hash',array('size'=>60,'maxlength'=>60)); ?>
+			27     <?php echo $form->error($model,'password_hash'); ?>
+			28   </div>
+
+********* Filter out users based on their role
+
+SingleTableInheritanceExample/protected$ vim models/Admin.php models/Student.php models/Teacher.php
+
+						replace 'teacher' with 'student' or 'admin' for Student.php, and 'Admin.php'
+			5   public function defaultScope(){
+			6      return array(
+			7          'condition'=>'role = "teacher"',
+			8           );
+			9   }
+
