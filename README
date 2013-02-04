@@ -166,3 +166,43 @@ click Preview
 click Generate
 
 
+fourth commit: 165c30f0f1cc1dddc4085cea542ae0e40d64a3b8
+
+
+********* Create a link in the menu bar for our new CRUD
+
+SingleTableInheritanceExample/protected$ vim views/layouts/main.php
+
+			30     <?php $this->widget('zii.widgets.CMenu',array(
+			31       'items'=>array(
+			32         array('label'=>'Home', 'url'=>array('/site/index')),
+			33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+			34         array('label'=>'Contact', 'url'=>array('/site/contact')),
+			35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
+			36         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+			37         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+			38       ),
+			39     )); ?>
+
+
+********* Enable clean URLs
+
+SingleTableInheritanceExample/protected$ vim config/main.php
+
+			31   // application components
+			32   'components'=>array(
+			33     'user'=>array(
+			34       // enable cookie-based authentication
+			35       'allowAutoLogin'=>true,
+			36     ),
+			37     // uncomment the following to enable URLs in path-format
+			38     'urlManager'=>array(
+			39       'urlFormat'=>'path',
+			40       'rules'=>array(
+			41         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
+			42         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+			43         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+			44       ),
+			45     ),
+			46     /*
+
