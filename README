@@ -206,3 +206,45 @@ SingleTableInheritanceExample/protected$ vim config/main.php
 			45     ),
 			46     /*
 
+fifth commit: c18c8c5fe1d1fb1ae7174e580b23ed942685d4f1
+
+********* Create models and CRUDs for students and teachers
+
+SingleTableInheritanceExample/protected$ vim models/Admin.php models/Student.php models/Teacher.php
+
+								Student.php
+			1 <?php
+			2
+			3 class Student extends User
+			4 {
+			5 }
+			
+								Teacher.php
+
+			1 <?php
+			2
+			3 class Teacher extends User
+			4 {
+			5 }
+
+visit 'http://localhost/SingleTableInheritanceExample/index.php/gii/default/login'    **** Note the url is different due to clean urls
+type in password then click 'Crud Generator'
+type in 'Student', then click Preview, then Generate.
+Repeat using 'Teacher' for model name.
+
+********* Create links for new CRUDs
+
+SingleTableInheritanceExample/protected$ vim views/layouts/main.php
+
+			30     <?php $this->widget('zii.widgets.CMenu',array(
+			31       'items'=>array(
+			32         array('label'=>'Home', 'url'=>array('/site/index')),
+			33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+			34         array('label'=>'Contact', 'url'=>array('/site/contact')),
+			35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
+			36         array('label'=>'Teachers', 'url'=>array('/teacher'), 'visible'=>!Yii::app()->user->isGuest),
+			37         array('label'=>'Students', 'url'=>array('/student'), 'visible'=>!Yii::app()->user->isGuest),
+			38         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+			39         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+			40       ),
+			41     )); ?>
