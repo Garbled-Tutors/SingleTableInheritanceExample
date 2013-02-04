@@ -12,3 +12,98 @@ Model Admin (inherits User) (role = 'admin')
 Model Teacher (inherits User) (role = 'teacher')
 Model Student (inherits User) (role = 'student')
 
+Steps to recreate:
+
+First commit: d8d07314e4f9177dcc41b401f69b410054544809
+
+********* Create Database Migrations
+
+SingleTableInheritanceExample/protected$ ./yiic migrate create create_user_table
+
+		Yii Migration Tool v1.0 (based on Yii v1.1.13)
+
+		Create new migration '/var/www/SingleTableInheritanceExample/protected/migrations/m130204_173243_create_user_table.php'? (yes|no) [no]:yes
+		New migration created successfully.
+
+SingleTableInheritanceExample/protected$ vim migrations/m130204_173243_create_user_table.php
+
+		1 <?php
+		2
+		3 class m130204_173243_create_user_table extends CDbMigration
+		4 {
+		5   public function up()
+		6   {
+		7     $this->createTable('user',
+		8       array('id' => 'pk',
+		9       'username' => 'varchar(100)',
+		10       'role' => 'varchar(10)',
+		11       'password_hash' => 'varchar(60)'));
+		12     $changeme_hash = '$2a$08$Tt1n.BO/z/Pq8vDLlBzTC.Hcd/Iir20d1m.QoxARJMiaArZWA2es.';
+		13     $this->insert('user', array('username'=>'admin', 'role'=>'admin', 'password_hash'=>$changeme_hash));
+		14   }
+		15
+		16   public function down()
+		17   {
+		18     $this->dropTable('user');
+		19   }
+		20 }
+
+********* Update configuration files to point to mysql database instead of sqlite, and insert table name and password
+
+SingleTableInheritanceExample/protected$ vim config/main.php config/console.php
+
+								main.php
+
+		33   // application components
+		34   'components'=>array(
+		35     'user'=>array(
+		36       // enable cookie-based authentication
+		37       'allowAutoLogin'=>true,
+		38     ),
+		39     // uncomment the following to enable URLs in path-format
+		40     /*
+		41     'urlManager'=>array(
+		42       'urlFormat'=>'path',
+		43       'rules'=>array(
+		44         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
+		45         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+		46         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+		47       ),
+		48     ),
+		49     'db'=>array(
+		50       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
+		51     ),
+		52     */
+		53     // uncomment the following to use a MySQL database
+		54     'db'=>array(
+		55       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
+		56       'emulatePrepare' => true,
+		57       'username' => 'root',
+		58       'password' => 'sqlpass',
+		59       'charset' => 'utf8',
+		60     ),
+		61     'errorHandler'=>array(
+		62       // use 'site/error' action to display errors
+		63       'errorAction'=>'site/error',
+		64     ),
+
+							console.php
+
+		12   // application components
+		13   'components'=>array(
+		14   /*
+		15     'db'=>array(
+		16       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
+		17     ),
+		18     */
+		19     // uncomment the following to use a MySQL database
+		20     'db'=>array(
+		21       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
+		22       'emulatePrepare' => true,
+		23       'username' => 'root',
+		24       'password' => 'sqlpass',
+		25       'charset' => 'utf8',
+		26     ),
+
+SingleTableInheritanceExample/protected$ ./yiic migrate
+
