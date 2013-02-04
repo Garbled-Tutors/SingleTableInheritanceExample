@@ -1,0 +1,14 @@
+I am uisng Yii and want to use three or more models to share the same table in a mysql database. Here is the intended database structure:
+
+Table User
+id (int)
+name (string)
+role (string)
+password_hash (string)
+
+
+Model User
+Model Admin (inherits User) (role = 'admin')
+Model Teacher (inherits User) (role = 'teacher')
+Model Student (inherits User) (role = 'student')
+
