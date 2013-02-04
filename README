@@ -107,3 +107,35 @@ SingleTableInheritanceExample/protected$ vim config/main.php config/console.php
 
 SingleTableInheritanceExample/protected$ ./yiic migrate
 
+Second commit: c0440b6c4ab210c27d709229cbe3749e06e07d14
+
+
+********* Enable Gii by uncommenting it's code from main.php, also change it's password to something easier to type
+
+SingleTableInheritanceExample/protected$ vim config/main.php
+
+		20
+		21   'modules'=>array(
+		22     // uncomment the following to enable the Gii tool
+		23     'gii'=>array(
+		24       'class'=>'system.gii.GiiModule',
+		25       'password'=>'password',
+		26       // If removed, Gii defaults to localhost only. Edit carefully to taste.
+		27       'ipFilters'=>array('127.0.0.1','::1'),
+		28     ),
+		29   ),
+
+********* Set file permissions to allow anyone (including gii) to modify the protected directory. You need to do this for gii to work.
+
+SingleTableInheritanceExample$ sudo chmod -R 777 protected
+
+********* Use Gii to create a model for User
+
+visit 'http://localhost/SingleTableInheritanceExample/index.php?r=gii/default/login' in the web browser
+type 'password' and press enter
+click 'Model Generator' link
+type 'user' for tablename
+Model Class should be filled in automatically with 'User'
+click Preview
+click Generate
+
