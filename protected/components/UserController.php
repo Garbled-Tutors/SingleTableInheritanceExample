@@ -7,6 +7,7 @@ class UserController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+	protected $gather_personal_information = User::GATHER_PERSONAL_INFORMATION;
 
 	/**
 	 * @return array action filters

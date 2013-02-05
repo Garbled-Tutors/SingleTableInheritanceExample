@@ -11,6 +11,7 @@
  */
 class User extends CActiveRecord
 {
+	const GATHER_PERSONAL_INFORMATION = false;
 	public $password;
 	public $password_repeat;
 
