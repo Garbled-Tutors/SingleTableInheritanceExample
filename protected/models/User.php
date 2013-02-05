@@ -11,6 +11,32 @@
  */
 class User extends CActiveRecord
 {
+	public $password;
+	public $password_repeat;
+
+	public function save()
+	{
+		if ($this->password != $this->password_repeat) { return false; }
+		if ($this->password != '')
+		{
+			$bcrypt = new Bcrypt(8);
+			$this->password_hash = $bcrypt->hash($this->password);
+			$this->password = '';
+			$this->password_repeat = '';
+		}
+		elseif ($this->password_hash == null)
+		{
+			return false;
+		}
+		return parent::save();
+	}
+
+	public function authenticate($password)
+	{
+		$bcrypt = new Bcrypt(8);
+		return $bcrypt->verify($password, $this->password_hash);
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -39,10 +65,11 @@ class User extends CActiveRecord
 		return array(
 			array('username', 'length', 'max'=>100),
 			array('role', 'length', 'max'=>10),
-			array('password_hash', 'length', 'max'=>60),
+			array('password', 'length', 'max'=>100),
+			array('password_repeat', 'compare', 'compareAttribute' => 'password'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, role, password_hash', 'safe', 'on'=>'search'),
+			array('id, username, role', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,7 +93,8 @@ class User extends CActiveRecord
 			'id' => 'ID',
 			'username' => 'Username',
 			'role' => 'Role',
-			'password_hash' => 'Password Hash',
+			'password' => 'Password',
+			'password_repeat' => 'Confirm Password',
 		);
 	}
 
@@ -84,7 +112,6 @@ class User extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('username',$this->username,true);
 		$criteria->compare('role',$this->role,true);
-		$criteria->compare('password_hash',$this->password_hash,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
