@@ -343,3 +343,53 @@ SingleTableInheritanceExample/protected$ vim controllers/*
 			95     if(isset($_POST['User']))
 			96     {
 			97       $model->attributes=$_POST['User'];
+
+
+seventh commit: f11234acc6955746abf2d5cd6e1d3b582bf43a47
+
+
+********* Move common methods from the Student, Teacher, and Admin Controllers to a helper function
+
+SingleTableInheritanceExample/protected$ cp controllers/TeacherController.php components/UserController.php
+SingleTableInheritanceExample/protected$ vim controllers/*
+
+							Delete everything in StudentController, TeacherController, and AdminController and replace it with these 7 lines (substituting teacher or admin for student when appropriate)
+				1 <?php
+				2
+				3 class StudentController extends UserController
+				4 {
+				5   protected $class_name = 'Student';
+				6   protected $lower_case_class_name = 'student';
+				7 }
+
+SingleTableInheritanceExample/protected$ vim components/UserController.php
+
+								Change the name of the class
+
+			 3 class UserController extends Controller
+
+								Go through the file and replace every string 'Teacher' with '$this->class_name'
+										and replace every string 'teacher' with '$this->lower_case_class_name'
+
+			 70     if(isset($_POST[$this->class_name])) 													//	if(isset($_POST['Teacher']))
+			 71     {
+			 72       $model->attributes=$_POST[$this->class_name];								//	$model->attributes=$_POST['Teacher'];
+			 73       $model->role = $this->lower_case_class_name;								//	$model->role = 'teacher';
+
+			 98       $model->role = 'teacher'; 																	// 	$model->role = $this->lower_case_class_name;
+
+			127     $dataProvider=new CActiveDataProvider('Teacher');  						// 	$dataProvider=new CActiveDataProvider($this->class_name);
+
+			140     if(isset($_GET[$this->class_name])) 													// 	if(isset($_GET['Teacher']))
+			141       $model->attributes=$_GET[$this->class_name];								//	$model->attributes=$_GET['Teacher'];
+
+			170     if(isset($_POST['ajax']) && $_POST['ajax']==='teacher-form') 	//	if(isset($_POST['ajax']) && $_POST['ajax']=== ($this->lower_case_class_name . '-form') )
+
+
+								Reference the model dynamicaly in actionCreate and loadModel
+			 65     $model=new Teacher;																						// 	$model=new $this->class_name;
+
+			157     $class = $this->class_name;																		//  $model=Teacher::model()->findByPk($id);
+			158     $model = $class::model()->findByPk($id);
+
+
