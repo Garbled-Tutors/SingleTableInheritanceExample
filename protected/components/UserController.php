@@ -135,7 +135,7 @@ class UserController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Teacher('search');
+		$model=new $this->class_name('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET[$this->class_name]))
 			$model->attributes=$_GET[$this->class_name];
@@ -167,7 +167,6 @@ class UserController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='teacher-form')
 		if(isset($_POST['ajax']) && $_POST['ajax']=== ($this->lower_case_class_name . '-form') )
 		{
 			echo CActiveForm::validate($model);
