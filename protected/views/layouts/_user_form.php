@@ -1,13 +1,13 @@
 <?php
-/* @var $this AdminController */
-/* @var $model Admin */
+/* @var $this UserController */
+/* @var $model User */
 /* @var $form CActiveForm */
 ?>
 
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'admin-form',
+	'id' => $this->form_name,
 	'enableAjaxValidation'=>false,
 )); ?>
 

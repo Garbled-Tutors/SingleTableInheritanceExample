@@ -51,8 +51,10 @@ class UserController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
+		$this->render('/layouts/user_view',array(
 			'model'=>$this->loadModel($id),
+			'class_name'=>$this->class_name,
+			'plural_class_name'=>$this->plural_class_name,
 		));
 	}
 
@@ -75,8 +77,10 @@ class UserController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('create',array(
+		$this->render('/layouts/user_create',array(
 			'model'=>$model,
+			'plural_class_name'=>$this->plural_class_name,
+			'class_name'=>$this->class_name
 		));
 	}
 
@@ -100,8 +104,11 @@ class UserController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
-		$this->render('update',array(
+		$this->render('/layouts/user_update',array(
 			'model'=>$model,
+			'class_name' => $this->class_name,
+			'lower_case_class_name' => $this->lower_case_class_name,
+			'plural_class_name' => $this->plural_class_name,
 		));
 	}
 
@@ -125,8 +132,11 @@ class UserController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider($this->class_name);
-		$this->render('index',array(
+		$this->render('/layouts/user_index',array(
 			'dataProvider'=>$dataProvider,
+			'class_name' => $this->class_name,
+			'lower_case_class_name' => $this->lower_case_class_name,
+			'plural_class_name' => $this->plural_class_name,
 		));
 	}
 
@@ -135,13 +145,16 @@ class UserController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new $this->class_name('search');
+		$model=new $this->class_name('/layouts/user_search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET[$this->class_name]))
 			$model->attributes=$_GET[$this->class_name];
 
-		$this->render('admin',array(
+		$this->render('/layouts/user_admin',array(
 			'model'=>$model,
+			'class_name'=>$this->class_name,
+			'plural_class_name'=>$this->plural_class_name,
+			'lower_case_class_name'=>$this->lower_case_class_name,
 		));
 	}
 

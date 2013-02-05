@@ -1,6 +1,6 @@
 <?php
-/* @var $this AdminController */
-/* @var $model Admin */
+/* @var $this UserController */
+/* @var $model User */
 /* @var $form CActiveForm */
 ?>
 

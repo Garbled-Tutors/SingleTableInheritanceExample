@@ -392,4 +392,21 @@ SingleTableInheritanceExample/protected$ vim components/UserController.php
 	157     $class = $this->class_name;																		//  $model=Teacher::model()->findByPk($id);
 	158     $model = $class::model()->findByPk($id);
 
+eight commit: 6352d6aaab6a11eaab92e1eb4e762c7c279f39c8
+
+********* Move common views from Student, Admin, and Teacher to layout files
+
+copy all files in views/student int views/layout
+rename all files so that they have a prefix 'user_'... make sure files that start with '_' still start with underscore
+edit each of these files and replace each occurance of student with $class_name, $plural_class_name, or $lower_case_class_name.
+
+		Update components/UserController and add 'class_name', 'lower_case_class_name', and 'plural_class_name' as variables for each action
+		Add the prefix '/layouts/user_' or '/layouts/_user' to each render command
+
+	107     $this->render('/layouts/user_update',array(
+	108       'model'=>$model,
+	109       'class_name' => $this->class_name,
+	110       'lower_case_class_name' => $this->lower_case_class_name,
+	111       'plural_class_name' => $this->plural_class_name,
+	112     ));
 

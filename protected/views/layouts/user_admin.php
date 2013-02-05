@@ -1,15 +1,15 @@
 <?php
-/* @var $this TeacherController */
-/* @var $model Teacher */
+/* @var $this UserController */
+/* @var $model User */
 
 $this->breadcrumbs=array(
-	'Teachers'=>array('index'),
+	$plural_class_name=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List Teacher', 'url'=>array('index')),
-	array('label'=>'Create Teacher', 'url'=>array('create')),
+	array('label'=>'List ' . $class_name, 'url'=>array('index')),
+	array('label'=>'Create ' . $class_name, 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +18,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#teacher-grid').yiiGridView('update', {
+	$('#" . $lower_case_class_name . "-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Teachers</h1>
+<h1>Manage <? echo $plural_class_name; ?></h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -35,13 +35,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
+<?php $this->renderPartial('/layouts/_user_search',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'teacher-grid',
+	'id'=> $lower_case_class_name . '-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
