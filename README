@@ -20,90 +20,90 @@ First commit: d8d07314e4f9177dcc41b401f69b410054544809
 
 SingleTableInheritanceExample/protected$ ./yiic migrate create create_user_table
 
-		Yii Migration Tool v1.0 (based on Yii v1.1.13)
+	Yii Migration Tool v1.0 (based on Yii v1.1.13)
 
-		Create new migration '/var/www/SingleTableInheritanceExample/protected/migrations/m130204_173243_create_user_table.php'? (yes|no) [no]:yes
-		New migration created successfully.
+	Create new migration '/var/www/SingleTableInheritanceExample/protected/migrations/m130204_173243_create_user_table.php'? (yes|no) [no]:yes
+	New migration created successfully.
 
 SingleTableInheritanceExample/protected$ vim migrations/m130204_173243_create_user_table.php
 
-		1 <?php
-		2
-		3 class m130204_173243_create_user_table extends CDbMigration
-		4 {
-		5   public function up()
-		6   {
-		7     $this->createTable('user',
-		8       array('id' => 'pk',
-		9       'username' => 'varchar(100)',
-		10       'role' => 'varchar(10)',
-		11       'password_hash' => 'varchar(60)'));
-		12     $changeme_hash = '$2a$08$Tt1n.BO/z/Pq8vDLlBzTC.Hcd/Iir20d1m.QoxARJMiaArZWA2es.';
-		13     $this->insert('user', array('username'=>'admin', 'role'=>'admin', 'password_hash'=>$changeme_hash));
-		14   }
-		15
-		16   public function down()
-		17   {
-		18     $this->dropTable('user');
-		19   }
-		20 }
+	1 <?php
+	2
+	3 class m130204_173243_create_user_table extends CDbMigration
+	4 {
+	5   public function up()
+	6   {
+	7     $this->createTable('user',
+	8       array('id' => 'pk',
+	9       'username' => 'varchar(100)',
+	10       'role' => 'varchar(10)',
+	11       'password_hash' => 'varchar(60)'));
+	12     $changeme_hash = '$2a$08$Tt1n.BO/z/Pq8vDLlBzTC.Hcd/Iir20d1m.QoxARJMiaArZWA2es.';
+	13     $this->insert('user', array('username'=>'admin', 'role'=>'admin', 'password_hash'=>$changeme_hash));
+	14   }
+	15
+	16   public function down()
+	17   {
+	18     $this->dropTable('user');
+	19   }
+	20 }
 
 ********* Update configuration files to point to mysql database instead of sqlite, and insert table name and password
 
 SingleTableInheritanceExample/protected$ vim config/main.php config/console.php
 
-								main.php
+		main.php
 
-		33   // application components
-		34   'components'=>array(
-		35     'user'=>array(
-		36       // enable cookie-based authentication
-		37       'allowAutoLogin'=>true,
-		38     ),
-		39     // uncomment the following to enable URLs in path-format
-		40     /*
-		41     'urlManager'=>array(
-		42       'urlFormat'=>'path',
-		43       'rules'=>array(
-		44         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-		45         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-		46         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-		47       ),
-		48     ),
-		49     'db'=>array(
-		50       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		51     ),
-		52     */
-		53     // uncomment the following to use a MySQL database
-		54     'db'=>array(
-		55       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
-		56       'emulatePrepare' => true,
-		57       'username' => 'root',
-		58       'password' => 'sqlpass',
-		59       'charset' => 'utf8',
-		60     ),
-		61     'errorHandler'=>array(
-		62       // use 'site/error' action to display errors
-		63       'errorAction'=>'site/error',
-		64     ),
+	33   // application components
+	34   'components'=>array(
+	35     'user'=>array(
+	36       // enable cookie-based authentication
+	37       'allowAutoLogin'=>true,
+	38     ),
+	39     // uncomment the following to enable URLs in path-format
+	40     /*
+	41     'urlManager'=>array(
+	42       'urlFormat'=>'path',
+	43       'rules'=>array(
+	44         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
+	45         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+	46         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+	47       ),
+	48     ),
+	49     'db'=>array(
+	50       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
+	51     ),
+	52     */
+	53     // uncomment the following to use a MySQL database
+	54     'db'=>array(
+	55       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
+	56       'emulatePrepare' => true,
+	57       'username' => 'root',
+	58       'password' => 'sqlpass',
+	59       'charset' => 'utf8',
+	60     ),
+	61     'errorHandler'=>array(
+	62       // use 'site/error' action to display errors
+	63       'errorAction'=>'site/error',
+	64     ),
 
-							console.php
+		console.php
 
-		12   // application components
-		13   'components'=>array(
-		14   /*
-		15     'db'=>array(
-		16       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		17     ),
-		18     */
-		19     // uncomment the following to use a MySQL database
-		20     'db'=>array(
-		21       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
-		22       'emulatePrepare' => true,
-		23       'username' => 'root',
-		24       'password' => 'sqlpass',
-		25       'charset' => 'utf8',
-		26     ),
+	12   // application components
+	13   'components'=>array(
+	14   /*
+	15     'db'=>array(
+	16       'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
+	17     ),
+	18     */
+	19     // uncomment the following to use a MySQL database
+	20     'db'=>array(
+	21       'connectionString' => 'mysql:host=localhost;dbname=testinheritance',
+	22       'emulatePrepare' => true,
+	23       'username' => 'root',
+	24       'password' => 'sqlpass',
+	25       'charset' => 'utf8',
+	26     ),
 
 SingleTableInheritanceExample/protected$ ./yiic migrate
 
@@ -114,16 +114,16 @@ Second commit: c0440b6c4ab210c27d709229cbe3749e06e07d14
 
 SingleTableInheritanceExample/protected$ vim config/main.php
 
-		20
-		21   'modules'=>array(
-		22     // uncomment the following to enable the Gii tool
-		23     'gii'=>array(
-		24       'class'=>'system.gii.GiiModule',
-		25       'password'=>'password',
-		26       // If removed, Gii defaults to localhost only. Edit carefully to taste.
-		27       'ipFilters'=>array('127.0.0.1','::1'),
-		28     ),
-		29   ),
+	20
+	21   'modules'=>array(
+	22     // uncomment the following to enable the Gii tool
+	23     'gii'=>array(
+	24       'class'=>'system.gii.GiiModule',
+	25       'password'=>'password',
+	26       // If removed, Gii defaults to localhost only. Edit carefully to taste.
+	27       'ipFilters'=>array('127.0.0.1','::1'),
+	28     ),
+	29   ),
 
 ********* Set file permissions to allow anyone (including gii) to modify the protected directory. You need to do this for gii to work.
 
@@ -147,18 +147,18 @@ Third commit: f4a03c574799c88062699608b49413ac6c3649f4
 
 SingleTableInheritanceExample/protected$ vim models/Admin.php
 
-		1 <?php
-		2
-		3 class Admin extends User
-		4 {
-		5 }
+	1 <?php
+	2
+	3 class Admin extends User
+	4 {
+	5 }
 
 
 ********* Create a CRUD for admins
 
-	** skip these steps if you still have your web browser open	
-	visit 'http://localhost/SingleTableInheritanceExample/index.php?r=gii/default/login' in the web browser
-	type 'password' and press enter
+** skip these steps if you still have your web browser open	
+visit 'http://localhost/SingleTableInheritanceExample/index.php?r=gii/default/login' in the web browser
+type 'password' and press enter
 click 'Crud Generator' link
 type 'Admin' for Model Class
 Model Controller ID should be filled in automatically with 'admin'
@@ -173,38 +173,38 @@ fourth commit: 165c30f0f1cc1dddc4085cea542ae0e40d64a3b8
 
 SingleTableInheritanceExample/protected$ vim views/layouts/main.php
 
-			30     <?php $this->widget('zii.widgets.CMenu',array(
-			31       'items'=>array(
-			32         array('label'=>'Home', 'url'=>array('/site/index')),
-			33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-			34         array('label'=>'Contact', 'url'=>array('/site/contact')),
-			35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
-			36         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-			37         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			38       ),
-			39     )); ?>
+	30     <?php $this->widget('zii.widgets.CMenu',array(
+	31       'items'=>array(
+	32         array('label'=>'Home', 'url'=>array('/site/index')),
+	33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+	34         array('label'=>'Contact', 'url'=>array('/site/contact')),
+	35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
+	36         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+	37         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+	38       ),
+	39     )); ?>
 
 
 ********* Enable clean URLs
 
 SingleTableInheritanceExample/protected$ vim config/main.php
 
-			31   // application components
-			32   'components'=>array(
-			33     'user'=>array(
-			34       // enable cookie-based authentication
-			35       'allowAutoLogin'=>true,
-			36     ),
-			37     // uncomment the following to enable URLs in path-format
-			38     'urlManager'=>array(
-			39       'urlFormat'=>'path',
-			40       'rules'=>array(
-			41         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-			42         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-			43         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-			44       ),
-			45     ),
-			46     /*
+	31   // application components
+	32   'components'=>array(
+	33     'user'=>array(
+	34       // enable cookie-based authentication
+	35       'allowAutoLogin'=>true,
+	36     ),
+	37     // uncomment the following to enable URLs in path-format
+	38     'urlManager'=>array(
+	39       'urlFormat'=>'path',
+	40       'rules'=>array(
+	41         '<controller:\w+>/<id:\d+>'=>'<controller>/view',
+	42         '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+	43         '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+	44       ),
+	45     ),
+	46     /*
 
 fifth commit: c18c8c5fe1d1fb1ae7174e580b23ed942685d4f1
 
@@ -212,20 +212,20 @@ fifth commit: c18c8c5fe1d1fb1ae7174e580b23ed942685d4f1
 
 SingleTableInheritanceExample/protected$ vim models/Admin.php models/Student.php models/Teacher.php
 
-								Student.php
-			1 <?php
-			2
-			3 class Student extends User
-			4 {
-			5 }
-			
-								Teacher.php
+						Student.php
+	1 <?php
+	2
+	3 class Student extends User
+	4 {
+	5 }
+	
+						Teacher.php
 
-			1 <?php
-			2
-			3 class Teacher extends User
-			4 {
-			5 }
+	1 <?php
+	2
+	3 class Teacher extends User
+	4 {
+	5 }
 
 visit 'http://localhost/SingleTableInheritanceExample/index.php/gii/default/login'    **** Note the url is different due to clean urls
 type in password then click 'Crud Generator'
@@ -236,95 +236,95 @@ Repeat using 'Teacher' for model name.
 
 SingleTableInheritanceExample/protected$ vim views/layouts/main.php
 
-			30     <?php $this->widget('zii.widgets.CMenu',array(
-			31       'items'=>array(
-			32         array('label'=>'Home', 'url'=>array('/site/index')),
-			33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-			34         array('label'=>'Contact', 'url'=>array('/site/contact')),
-			35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
-			36         array('label'=>'Teachers', 'url'=>array('/teacher'), 'visible'=>!Yii::app()->user->isGuest),
-			37         array('label'=>'Students', 'url'=>array('/student'), 'visible'=>!Yii::app()->user->isGuest),
-			38         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-			39         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			40       ),
-			41     )); ?>
+	30     <?php $this->widget('zii.widgets.CMenu',array(
+	31       'items'=>array(
+	32         array('label'=>'Home', 'url'=>array('/site/index')),
+	33         array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
+	34         array('label'=>'Contact', 'url'=>array('/site/contact')),
+	35         array('label'=>'Admins', 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest),
+	36         array('label'=>'Teachers', 'url'=>array('/teacher'), 'visible'=>!Yii::app()->user->isGuest),
+	37         array('label'=>'Students', 'url'=>array('/student'), 'visible'=>!Yii::app()->user->isGuest),
+	38         array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+	39         array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+	40       ),
+	41     )); ?>
 
 
 ********* Set the role for each user type automatically
 
 SingleTableInheritanceExample/protected$ vim controllers/*
 
-							Added lines 73 and 98 to AdminController, TeacherController, and Student Controller
-							set the role to 'admin', 'teacher', and 'student' respectively
+					Added lines 73 and 98 to AdminController, TeacherController, and Student Controller
+					set the role to 'admin', 'teacher', and 'student' respectively
 
-			63   public function actionCreate()
-			64   {
-			65     $model=new Admin;
-			66
-			67     // Uncomment the following line if AJAX validation is needed
-			68     // $this->performAjaxValidation($model);
-			69
-			70     if(isset($_POST['Admin']))
-			71     {
-			72       $model->attributes=$_POST['Admin'];
-			73       $model->role = 'admin';
-			74       if($model->save())
-			75         $this->redirect(array('view','id'=>$model->id));
-			76     }
-			77
-			78     $this->render('create',array(
-			79       'model'=>$model,
-			80     ));
-			81   }
-			
-			88   public function actionUpdate($id)
-			89   {
-			90     $model=$this->loadModel($id);
-			91
-			92     // Uncomment the following line if AJAX validation is needed
-			93     // $this->performAjaxValidation($model);
-			94
-			95     if(isset($_POST['Admin']))
-			96     {
-			97       $model->attributes=$_POST['Admin'];
-			98       $model->role = 'admin';
-			99       if($model->save())
-			100         $this->redirect(array('view','id'=>$model->id));
-			101     }
-			102
-			103     $this->render('update',array(
-			104       'model'=>$model,
-			105     ));
-			106   }
+	63   public function actionCreate()
+	64   {
+	65     $model=new Admin;
+	66
+	67     // Uncomment the following line if AJAX validation is needed
+	68     // $this->performAjaxValidation($model);
+	69
+	70     if(isset($_POST['Admin']))
+	71     {
+	72       $model->attributes=$_POST['Admin'];
+	73       $model->role = 'admin';
+	74       if($model->save())
+	75         $this->redirect(array('view','id'=>$model->id));
+	76     }
+	77
+	78     $this->render('create',array(
+	79       'model'=>$model,
+	80     ));
+	81   }
+	
+	88   public function actionUpdate($id)
+	89   {
+	90     $model=$this->loadModel($id);
+	91
+	92     // Uncomment the following line if AJAX validation is needed
+	93     // $this->performAjaxValidation($model);
+	94
+	95     if(isset($_POST['Admin']))
+	96     {
+	97       $model->attributes=$_POST['Admin'];
+	98       $model->role = 'admin';
+	99       if($model->save())
+	100         $this->redirect(array('view','id'=>$model->id));
+	101     }
+	102
+	103     $this->render('update',array(
+	104       'model'=>$model,
+	105     ));
+	106   }
 
 SingleTableInheritanceExample/protected$ vim views/admin/_form.php views/student/_form.php views/teacher/_form.php
 
 ********* Remove the field that asks for the users role
 
-							Deleted the code between these two sections in each file
+					Deleted the code between these two sections in each file
 
-			18   <div class="row">
-			19     <?php echo $form->labelEx($model,'username'); ?>
-			20     <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>100)); ?>
-			21     <?php echo $form->error($model,'username'); ?>
-			22   </div>
-			23
-			24   <div class="row">
-			25     <?php echo $form->labelEx($model,'password_hash'); ?>
-			26     <?php echo $form->textField($model,'password_hash',array('size'=>60,'maxlength'=>60)); ?>
-			27     <?php echo $form->error($model,'password_hash'); ?>
-			28   </div>
+	18   <div class="row">
+	19     <?php echo $form->labelEx($model,'username'); ?>
+	20     <?php echo $form->textField($model,'username',array('size'=>60,'maxlength'=>100)); ?>
+	21     <?php echo $form->error($model,'username'); ?>
+	22   </div>
+	23
+	24   <div class="row">
+	25     <?php echo $form->labelEx($model,'password_hash'); ?>
+	26     <?php echo $form->textField($model,'password_hash',array('size'=>60,'maxlength'=>60)); ?>
+	27     <?php echo $form->error($model,'password_hash'); ?>
+	28   </div>
 
 ********* Filter out users based on their role
 
 SingleTableInheritanceExample/protected$ vim models/Admin.php models/Student.php models/Teacher.php
 
-						replace 'teacher' with 'student' or 'admin' for Student.php, and 'Admin.php'
-			5   public function defaultScope(){
-			6      return array(
-			7          'condition'=>'role = "teacher"',
-			8           );
-			9   }
+				replace 'teacher' with 'student' or 'admin' for Student.php, and 'Admin.php'
+	5   public function defaultScope(){
+	6      return array(
+	7          'condition'=>'role = "teacher"',
+	8           );
+	9   }
 
 sixth commit: 585b7e828fbeb5954799c22e720dff9f3affd33a
 
@@ -332,17 +332,17 @@ SingleTableInheritanceExample/protected$ vim controllers/*
 
 ********* Update Bug fix. Could not modify users.
 
-							change 'Student', 'Admin', and 'Teacher' to 'User' on line 95 and 97 in AdminController, StudentController, and TeacherController
-			88   public function actionUpdate($id)
-			89   {
-			90     $model=$this->loadModel($id);
-			91
-			92     // Uncomment the following line if AJAX validation is needed
-			93     // $this->performAjaxValidation($model);
-			94
-			95     if(isset($_POST['User']))
-			96     {
-			97       $model->attributes=$_POST['User'];
+		change 'Student', 'Admin', and 'Teacher' to 'User' on line 95 and 97 in AdminController, StudentController, and TeacherController
+	88   public function actionUpdate($id)
+	89   {
+	90     $model=$this->loadModel($id);
+	91
+	92     // Uncomment the following line if AJAX validation is needed
+	93     // $this->performAjaxValidation($model);
+	94
+	95     if(isset($_POST['User']))
+	96     {
+	97       $model->attributes=$_POST['User'];
 
 
 seventh commit: f11234acc6955746abf2d5cd6e1d3b582bf43a47
@@ -353,43 +353,43 @@ seventh commit: f11234acc6955746abf2d5cd6e1d3b582bf43a47
 SingleTableInheritanceExample/protected$ cp controllers/TeacherController.php components/UserController.php
 SingleTableInheritanceExample/protected$ vim controllers/*
 
-							Delete everything in StudentController, TeacherController, and AdminController and replace it with these 7 lines (substituting teacher or admin for student when appropriate)
-				1 <?php
-				2
-				3 class StudentController extends UserController
-				4 {
-				5   protected $class_name = 'Student';
-				6   protected $lower_case_class_name = 'student';
-				7 }
+		Delete everything in StudentController, TeacherController, and AdminController and replace it with these 7 lines (substituting teacher or admin for student when appropriate)
+	1 <?php
+	2
+	3 class StudentController extends UserController
+	4 {
+	5   protected $class_name = 'Student';
+	6   protected $lower_case_class_name = 'student';
+	7 }
 
 SingleTableInheritanceExample/protected$ vim components/UserController.php
 
-								Change the name of the class
+		Change the name of the class
 
-			 3 class UserController extends Controller
+	3 class UserController extends Controller
 
-								Go through the file and replace every string 'Teacher' with '$this->class_name'
-										and replace every string 'teacher' with '$this->lower_case_class_name'
+		Go through the file and replace every string 'Teacher' with '$this->class_name'
+				and replace every string 'teacher' with '$this->lower_case_class_name'
 
-			 70     if(isset($_POST[$this->class_name])) 													//	if(isset($_POST['Teacher']))
-			 71     {
-			 72       $model->attributes=$_POST[$this->class_name];								//	$model->attributes=$_POST['Teacher'];
-			 73       $model->role = $this->lower_case_class_name;								//	$model->role = 'teacher';
+	70     if(isset($_POST[$this->class_name])) 													//	if(isset($_POST['Teacher']))
+	71     {
+	72       $model->attributes=$_POST[$this->class_name];								//	$model->attributes=$_POST['Teacher'];
+	73       $model->role = $this->lower_case_class_name;									//	$model->role = 'teacher';
 
-			 98       $model->role = 'teacher'; 																	// 	$model->role = $this->lower_case_class_name;
+	98       $model->role = 'teacher'; 																		// 	$model->role = $this->lower_case_class_name;
 
-			127     $dataProvider=new CActiveDataProvider('Teacher');  						// 	$dataProvider=new CActiveDataProvider($this->class_name);
+	127     $dataProvider=new CActiveDataProvider('Teacher');  						// 	$dataProvider=new CActiveDataProvider($this->class_name);
 
-			140     if(isset($_GET[$this->class_name])) 													// 	if(isset($_GET['Teacher']))
-			141       $model->attributes=$_GET[$this->class_name];								//	$model->attributes=$_GET['Teacher'];
+	140     if(isset($_GET[$this->class_name])) 													// 	if(isset($_GET['Teacher']))
+	141       $model->attributes=$_GET[$this->class_name];								//	$model->attributes=$_GET['Teacher'];
 
-			170     if(isset($_POST['ajax']) && $_POST['ajax']==='teacher-form') 	//	if(isset($_POST['ajax']) && $_POST['ajax']=== ($this->lower_case_class_name . '-form') )
+	170     if(isset($_POST['ajax']) && $_POST['ajax']==='teacher-form') 	//	if(isset($_POST['ajax']) && $_POST['ajax']=== ($this->lower_case_class_name . '-form') )
 
 
-								Reference the model dynamicaly in actionCreate and loadModel
-			 65     $model=new Teacher;																						// 	$model=new $this->class_name;
+		Reference the model dynamicaly in actionCreate and loadModel
+	65     $model=new Teacher;																						// 	$model=new $this->class_name;
 
-			157     $class = $this->class_name;																		//  $model=Teacher::model()->findByPk($id);
-			158     $model = $class::model()->findByPk($id);
+	157     $class = $this->class_name;																		//  $model=Teacher::model()->findByPk($id);
+	158     $model = $class::model()->findByPk($id);
 
 
