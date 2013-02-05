@@ -14,7 +14,49 @@ class User extends CActiveRecord
 	public $password;
 	public $password_repeat;
 
-	public function save()
+	public $first_name;
+	public $last_name;
+	public $address;
+	public $city;
+	public $state;
+	public $zip;
+
+	public function lookupPersonalInformation()
+	{
+		$personal_information = PersonalInformation::model()->findByAttributes(array('user_id' => $this->id));
+		if ($personal_information)
+		{
+			$this->first_name = $personal_information->first_name;
+			$this->last_name = $personal_information->last_name;
+			$this->address = $personal_information->address;
+			$this->city = $personal_information->city;
+			$this->state = $personal_information->state;
+			$this->zip = $personal_information->zip;
+		}
+	}
+	public function savePersonalInformation()
+	{
+		if ( ($this->first_name == '') and ($this->last_name == '') and ($this->city == '') and ($this->state == '') and ($this->zip == '') and ($this->address == '') ) 
+		{
+			return true;
+		}
+		$personal_information = PersonalInformation::model()->findByAttributes(array('user_id' => $this->id));
+		if (!$personal_information)
+		{
+			$personal_information = new PersonalInformation;
+		}
+		$personal_information->user_id = $this->id;
+		$personal_information->first_name = $this->first_name;
+		$personal_information->last_name = $this->last_name;
+		$personal_information->address = $this->address;
+		$personal_information->city = $this->city;
+		$personal_information->state = $this->state;
+		$personal_information->zip = $this->zip;
+
+		return $personal_information->save();
+	}
+
+	public function savePasswordInformation()
 	{
 		if ($this->password != $this->password_repeat) { return false; }
 		if ($this->password != '')
@@ -28,7 +70,18 @@ class User extends CActiveRecord
 		{
 			return false;
 		}
-		return parent::save();
+		return true;
+	}
+
+	public function save()
+	{
+		if (!$this->savePasswordInformation()) { return false;	}
+		if (parent::save())
+		{
+			if (!$this->savePersonalInformation()) { return false;	}
+			return true;
+		}
+		return false;
 	}
 
 	public function authenticate($password)
@@ -67,6 +120,13 @@ class User extends CActiveRecord
 			array('role', 'length', 'max'=>10),
 			array('password', 'length', 'max'=>100),
 			array('password_repeat', 'compare', 'compareAttribute' => 'password'),
+
+			array('first_name', 'length', 'max'=>60),
+			array('last_name', 'length', 'max'=>60),
+			array('address', 'length', 'max'=>60),
+			array('city', 'length', 'max'=>60),
+			array('state', 'length', 'max'=>2),
+			array('zip', 'length', 'max'=>5),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, username, role', 'safe', 'on'=>'search'),

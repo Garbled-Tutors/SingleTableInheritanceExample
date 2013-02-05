@@ -6,4 +6,5 @@ class StudentController extends UserController
 	protected $lower_case_class_name = 'student';
 	protected $plural_class_name = 'Students';
 	protected $form_name = 'student-form';
+	protected $gather_personal_information = true;
 }
